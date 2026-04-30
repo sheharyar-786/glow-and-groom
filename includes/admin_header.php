@@ -16,7 +16,14 @@
     <header class="admin-top-bar">
         <div class="container admin-nav-flex">
             <a href="admin_dashboard.php" class="admin-logo">
-                <img src="assets/images/logo (2).png" alt="Logo">
+                <?php 
+                $admin_id = $_SESSION['user_id'];
+                $admin_data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT profile_image FROM users WHERE id = '$admin_id'"));
+                if($admin_data['profile_image']): ?>
+                    <img src="<?php echo $admin_data['profile_image']; ?>" alt="Logo" style="filter: none;">
+                <?php else: ?>
+                    <img src="assets/images/logo (2).png" alt="Logo">
+                <?php endif; ?>
                 <span>Admin Portal</span>
             </a>
             

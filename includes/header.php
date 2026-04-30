@@ -25,6 +25,7 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="shop.php?gender=women">Women</a></li>
                 <li><a href="shop.php?gender=men">Men</a></li>
+                <li><a href="blog.php">Journal</a></li>
                 <li><a href="routine-builder.php" class="highlight">Routine Builder</a></li>
             </ul>
             <div class="nav-icons">

@@ -22,7 +22,7 @@ include 'includes/header.php';
         <nav class="account-nav">
             <a href="account.php" class="active">Order History</a>
             <a href="routine-builder.php">My Saved Routine</a>
-            <a href="logout.php" class="logout">Logout</a>
+            <a href="auth.php?logout=1" class="logout">Logout</a>
         </nav>
     </aside>
 

@@ -4,6 +4,13 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 include 'includes/db.php';
 
+// Handle Logout
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header("Location: welcome.php");
+    exit();
+}
+
 $message = "";
 
 // 2. Check if user is already logged in

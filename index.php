@@ -25,9 +25,9 @@ include 'includes/header.php';
     </section>
 
     <section class="featured-products container" style="padding: 60px 0;">
-        <div class="section-header text-center" style="margin-bottom: 60px;">
-            <h2 style="font-family: 'Playfair Display', serif; font-size: 42px; margin-bottom: 15px;">The Essentials</h2>
-            <p style="color: #777; letter-spacing: 2px; text-transform: uppercase; font-size: 12px;">Curated for your daily ritual</p>
+        <div class="section-header text-center" style="margin-bottom: 80px; text-align: center;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 56px; margin-bottom: 15px; letter-spacing: -1px;">The Essentials</h2>
+            <p style="color: var(--accent); letter-spacing: 4px; text-transform: uppercase; font-size: 11px; font-weight: 700;">Curated for your daily ritual</p>
         </div>
         
         <div class="product-grid">
@@ -39,8 +39,8 @@ include 'includes/header.php';
             ?>
             <div class="product-card" data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>">
                 <div class="product-img">
-                    <a href="product.php?id=<?php echo $product['id']; ?>">
-                        <img src="<?php echo $product['image_url']; ?>" alt="<?php echo $product['name']; ?>" style="max-width: 100%; height: auto;">
+                    <a href="product.php?id=<?php echo $product['id']; ?>" class="img-wrapper">
+                        <img src="<?php echo $product['image_url']; ?>" alt="<?php echo $product['name']; ?>" class="featured-img">
                     </a>
                     <button class="quick-add">Add to Bag +</button>
                 </div>
