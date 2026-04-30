@@ -1,0 +1,10 @@
+# Local Config
+includes/db.php
+
+# Temp/Scratch Files
+scratch/
+*.log
+.DS_Store
+Thumbs.db
+node_modules/
+.vscode/
