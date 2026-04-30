@@ -4,13 +4,16 @@ $extraStyles = '<link rel="stylesheet" href="css/contact.css">';
 include 'includes/header.php'; 
 ?>
 
+    <header class="contact-hero" style="background: linear-gradient(rgba(10, 15, 15, 0.5), rgba(10, 15, 15, 0.5)), url('assets/images/contact-bg.png');">
+        <div class="container" data-aos="zoom-out">
+            <span class="subtitle" style="color: #fff; opacity: 0.8;">Personal Assistance</span>
+            <h1 style="color: #fff;">How Can We Help?</h1>
+            <p style="color: #eee;">Our experts are dedicated to helping you achieve your skincare goals.</p>
+        </div>
+    </header>
+
     <main class="contact-page">
         <div class="container">
-            <section class="contact-intro" data-aos="fade-up">
-                <span class="subtitle">Personal Assistance</span>
-                <h1>How Can We Help?</h1>
-                <p>Our experts are dedicated to helping you achieve your skincare goals.</p>
-            </section>
 
             <div class="contact-grid">
                 <div class="contact-form-wrapper" data-aos="fade-right">
@@ -43,21 +46,21 @@ include 'includes/header.php';
                 </div>
 
                 <aside class="contact-info" data-aos="fade-left">
-                    <div class="info-card">
+                    <div class="info-card info-gold">
                         <div class="info-icon">📍</div>
                         <div class="info-text">
                             <h4>Studio Address</h4>
                             <p>123 Beauty Lane, Sadiqabad, Punjab, Pakistan</p>
                         </div>
                     </div>
-                    <div class="info-card">
+                    <div class="info-card info-blue">
                         <div class="info-icon">✉️</div>
                         <div class="info-text">
                             <h4>Direct Email</h4>
                             <p>hello@glowandgroom.com<br>support@glowandgroom.com</p>
                         </div>
                     </div>
-                    <div class="info-card">
+                    <div class="info-card info-green">
                         <div class="info-icon">📞</div>
                         <div class="info-text">
                             <h4>Concierge Line</h4>
