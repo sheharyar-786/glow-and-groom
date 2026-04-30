@@ -24,10 +24,10 @@ include 'includes/header.php';
         </div>
     </section>
 
-    <section class="featured-products container" style="padding: 60px 0;">
-        <div class="section-header text-center" style="margin-bottom: 80px; text-align: center;">
-            <h2 style="font-family: 'Playfair Display', serif; font-size: 56px; margin-bottom: 15px; letter-spacing: -1px;">The Essentials</h2>
-            <p style="color: var(--accent); letter-spacing: 4px; text-transform: uppercase; font-size: 11px; font-weight: 700;">Curated for your daily ritual</p>
+    <section class="featured-products container">
+        <div class="section-header" data-aos="fade-down">
+            <h2>The Essentials</h2>
+            <p>Curated for your daily ritual</p>
         </div>
         
         <div class="product-grid">
@@ -37,7 +37,7 @@ include 'includes/header.php';
             $delay = 0;
             while($product = mysqli_fetch_assoc($featured_res)):
             ?>
-            <div class="product-card" data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>">
+            <article class="product-card" data-aos="fade-up" data-aos-delay="<?php echo $delay; ?>">
                 <div class="product-img">
                     <a href="product.php?id=<?php echo $product['id']; ?>" class="img-wrapper">
                         <img src="<?php echo $product['image_url']; ?>" alt="<?php echo $product['name']; ?>" class="featured-img">
@@ -49,7 +49,7 @@ include 'includes/header.php';
                     <h3 class="product-name"><a href="product.php?id=<?php echo $product['id']; ?>" style="text-decoration: none; color: inherit;"><?php echo $product['name']; ?></a></h3>
                     <p class="product-price"><?php echo number_format($product['price']); ?> PKR</p>
                 </div>
-            </div>
+            </article>
             <?php 
             $delay += 200;
             endwhile; 
@@ -57,19 +57,28 @@ include 'includes/header.php';
         </div>
     </section>
 
-    <section class="routine-cta" style="background: var(--primary); color: white; padding: 100px 0; position: relative; overflow: hidden;">
-        <div class="container" style="display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2;">
-            <div style="max-width: 500px;">
-                <h2 style="font-family: 'Playfair Display', serif; font-size: 50px; margin-bottom: 20px;">Built for You.</h2>
-                <p style="font-size: 16px; opacity: 0.8; margin-bottom: 40px; line-height: 1.8;">Our AI-powered routine builder analyzes your skin type and concerns to create a personalized care plan that actually works.</p>
+    <section class="routine-cta">
+        <div class="container">
+            <div class="cta-content" data-aos="fade-right">
+                <h2>Built for You.</h2>
+                <p>Our AI-powered routine builder analyzes your skin type and concerns to create a personalized care plan that actually works.</p>
                 <a href="routine-builder.php" class="btn">Build My Routine</a>
             </div>
-            <div class="cta-image" style="width: 45%;" data-aos="fade-left">
-                <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=800&auto=format&fit=crop" alt="Skincare" style="width: 100%; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.3);">
+            <div class="cta-image" data-aos="fade-left">
+                <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=800&auto=format&fit=crop" alt="Skincare">
             </div>
         </div>
-        <div style="position: absolute; top: -50%; right: -10%; width: 50%; height: 200%; background: radial-gradient(circle, rgba(212, 163, 115, 0.15) 0%, transparent 70%); z-index: 1;"></div>
     </section>
+
+<section class="brand-ritual-section" style="background: linear-gradient(rgba(26, 42, 42, 0.4), rgba(26, 42, 42, 0.4)), url('assets/icons/background scroll.png'); background-attachment: fixed; background-size: cover; background-position: center; padding: 200px 0; color: white; text-align: center;">
+    <div class="container" data-aos="zoom-in">
+        <div class="ritual-content" style="max-width: 800px; margin: 0 auto; background: rgba(0,0,0,0.3); backdrop-filter: blur(20px); padding: 80px 40px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 100px rgba(0,0,0,0.5);">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 56px; margin-bottom: 25px; letter-spacing: 1px;">Timeless Beauty.</h2>
+            <p style="font-size: 20px; line-height: 1.8; opacity: 0.9; margin-bottom: 45px; font-weight: 300;">Discover the intersection of ancient rituals and modern science. Our curated collections are designed to bring out your natural radiance, one ritual at a time.</p>
+            <a href="shop.php" class="btn" style="padding: 18px 50px; font-size: 13px;">Experience the Collection</a>
+        </div>
+    </div>
+</section>
 
 <?php 
 include 'includes/footer.php'; 

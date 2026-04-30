@@ -18,14 +18,14 @@ include 'includes/header.php';
 ?>
 
 <main class="cart-page container">
-    <div class="cart-header">
+    <div class="cart-header" data-aos="fade-down">
         <h1>Shopping Bag</h1>
         <p>Review your selections before checkout</p>
     </div>
 
     <?php if(mysqli_num_rows($result) > 0): ?>
     <div class="cart-flex">
-        <div class="cart-items">
+        <div class="cart-items" data-aos="fade-right">
             <?php while($item = mysqli_fetch_assoc($result)): 
                 $item_total = $item['price'] * $item['quantity'];
                 $subtotal += $item_total;
@@ -37,26 +37,26 @@ include 'includes/header.php';
                 <div class="item-details">
                     <div class="item-main">
                         <h3><?php echo $item['name']; ?></h3>
-                        <p class="item-meta"><?php echo $item['category']; ?> | <?php echo $item['gender']; ?></p>
+                        <p class="item-meta"><?php echo $item['category']; ?> • <?php echo $item['gender']; ?></p>
                     </div>
                     <div class="item-qty">
-                        <span>Quantity: <?php echo $item['quantity']; ?></span>
+                        Quantity: <?php echo $item['quantity']; ?>
                     </div>
                 </div>
                 <div class="item-price-remove">
                     <p class="price"><?php echo number_format($item_total); ?> PKR</p>
-                    <a href="cart_action.php?remove=<?php echo $item['cart_id']; ?>" class="remove-btn">Remove</a>
+                    <a href="cart_action.php?remove=<?php echo $item['cart_id']; ?>" class="remove-btn">Remove Item</a>
                 </div>
             </div>
             <?php endwhile; ?>
             
-            <div class="cart-footer-actions" style="margin-top: 30px;">
+            <div class="cart-footer-actions">
                 <a href="shop.php" class="btn-text">← Continue Shopping</a>
-                <a href="cart_action.php?clear=1" class="btn-text" style="color: #c0392b; margin-left: 20px;">Clear Bag</a>
+                <a href="cart_action.php?clear=1" class="btn-text" style="color: #999;">Clear Shopping Bag</a>
             </div>
         </div>
 
-        <aside class="cart-summary">
+        <aside class="cart-summary" data-aos="fade-left">
             <div class="summary-box">
                 <h3>Order Summary</h3>
                 <div class="summary-row">
@@ -77,11 +77,11 @@ include 'includes/header.php';
         </aside>
     </div>
     <?php else: ?>
-    <div class="empty-cart text-center" style="padding: 100px 0;">
-        <div style="font-size: 64px; margin-bottom: 20px;">🛍️</div>
+    <div class="empty-cart" data-aos="zoom-in">
+        <div class="icon">🛍️</div>
         <h2>Your bag is empty</h2>
-        <p style="color: #777; margin-bottom: 30px;">Looks like you haven't added anything yet.</p>
-        <a href="shop.php" class="btn">Start Shopping</a>
+        <p>Looks like you haven't added anything to your collection yet.</p>
+        <a href="shop.php" class="btn">Explore the Collection</a>
     </div>
     <?php endif; ?>
 </main>

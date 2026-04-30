@@ -31,8 +31,8 @@
                 <ul>
                     <li><a href="contact.php">Contact Us</a></li>
                     <li><a href="about.php">About Us</a></li>
-                    <li><a href="#">Shipping & Returns</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="shipping.php">Shipping & Returns</a></li>
+                    <li><a href="privacy.php">Privacy Policy</a></li>
                 </ul>
             </div>
             <div class="footer-newsletter">

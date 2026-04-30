@@ -76,8 +76,10 @@ include 'includes/header.php';
         </div>
 
         <!-- Social Proof Section -->
-        <section class="reviews-section" style="margin-top: 80px;">
-            <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 30px;">Customer Reviews</h2>
+        <section class="reviews-section">
+            <div class="reviews-header">
+                <h2>Customer Reviews</h2>
+            </div>
             
             <?php echo $review_msg; ?>
 
@@ -88,30 +90,30 @@ include 'includes/header.php';
                 if (mysqli_num_rows($rev_res) > 0):
                     while($rev = mysqli_fetch_assoc($rev_res)):
                 ?>
-                <div class="review-card" style="padding: 25px; background: #fafafa; border-radius: 12px; margin-bottom: 20px;">
-                    <div class="review-top" style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <strong style="font-size: 14px;"><?php echo $rev['first_name']; ?></strong>
-                        <div class="stars" style="color: #d4a373;">
+                <div class="review-card">
+                    <div class="review-top">
+                        <strong><?php echo $rev['first_name']; ?></strong>
+                        <div class="stars">
                             <?php for($i=0; $i<$rev['rating']; $i++) echo "★"; ?>
                         </div>
                     </div>
-                    <p style="font-size: 14px; color: #666;"><?php echo $rev['comment']; ?></p>
+                    <p><?php echo $rev['comment']; ?></p>
                 </div>
                 <?php 
                     endwhile; 
                 else:
-                    echo "<p>No reviews yet. Be the first to share your thoughts!</p>";
+                    echo "<div class='empty-state' style='text-align: center; padding: 40px; color: #999;'><p>No reviews yet. Be the first to share your thoughts!</p></div>";
                 endif;
                 ?>
             </div>
 
             <?php if(isset($_SESSION['user_id'])): ?>
-            <div class="add-review" style="margin-top: 50px; background: #fff; padding: 30px; border: 1px solid #eee; border-radius: 15px;">
-                <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 20px;">Leave a Review</h3>
-                <form action="product.php?id=<?php echo $id; ?>" method="POST">
-                    <div class="input-group" style="margin-bottom: 20px;">
+            <div class="add-review">
+                <h3>Leave a Review</h3>
+                <form action="product.php?id=<?php echo $id; ?>" method="POST" class="review-form">
+                    <div class="input-group">
                         <label>Rating</label>
-                        <select name="rating" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                        <select name="rating" required>
                             <option value="5">5 Stars - Amazing</option>
                             <option value="4">4 Stars - Very Good</option>
                             <option value="3">3 Stars - Good</option>
@@ -121,13 +123,13 @@ include 'includes/header.php';
                     </div>
                     <div class="input-group">
                         <label>Your Experience</label>
-                        <textarea name="comment" required rows="4" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px;" placeholder="What did you think about this product?"></textarea>
+                        <textarea name="comment" required rows="4" placeholder="What did you think about this product?"></textarea>
                     </div>
-                    <button type="submit" class="send-btn" style="margin-top: 20px; width: 100%;">Submit Review</button>
+                    <button type="submit" class="send-btn">Submit Review</button>
                 </form>
             </div>
             <?php else: ?>
-            <p style="margin-top: 40px; text-align: center; font-size: 14px; color: #888;">Please <a href="auth.php" style="color: #d4a373; font-weight: 700;">login</a> to leave a review.</p>
+            <p style="margin-top: 40px; text-align: center; font-size: 14px; color: #888;">Please <a href="auth.php" style="color: var(--accent); font-weight: 700;">login</a> to leave a review.</p>
             <?php endif; ?>
         </section>
     </div>

@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = mysqli_real_escape_string($conn, $_POST['category']);
     $gender = mysqli_real_escape_string($conn, $_POST['gender']);
     $image_url = mysqli_real_escape_string($conn, $_POST['image_url']);
+    $skin_type = mysqli_real_escape_string($conn, $_POST['skin_type']);
     $is_featured = isset($_POST['is_featured']) ? 1 : 0;
 
     $query = "UPDATE products SET 
@@ -26,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               price = '$price', 
               category = '$category', 
               gender = '$gender', 
+              skin_type_match = '$skin_type', 
               image_url = '$image_url', 
               is_featured = '$is_featured' 
               WHERE id = '$id'";
@@ -86,9 +88,11 @@ include 'includes/admin_header.php';
                 <div class="input-group">
                     <label>Category</label>
                     <select name="category" required>
+                        <option value="Serums" <?php echo $product['category'] == 'Serums' ? 'selected' : ''; ?>>Serums</option>
+                        <option value="Facial" <?php echo $product['category'] == 'Facial' ? 'selected' : ''; ?>>Facial</option>
+                        <option value="Facemask" <?php echo $product['category'] == 'Facemask' ? 'selected' : ''; ?>>Facemask</option>
+                        <option value="Perfume" <?php echo $product['category'] == 'Perfume' ? 'selected' : ''; ?>>Perfume</option>
                         <option value="Skincare" <?php echo $product['category'] == 'Skincare' ? 'selected' : ''; ?>>Skincare</option>
-                        <option value="Treatment" <?php echo $product['category'] == 'Treatment' ? 'selected' : ''; ?>>Treatment</option>
-                        <option value="Daily Care" <?php echo $product['category'] == 'Daily Care' ? 'selected' : ''; ?>>Daily Care</option>
                         <option value="Grooming" <?php echo $product['category'] == 'Grooming' ? 'selected' : ''; ?>>Grooming</option>
                     </select>
                 </div>
@@ -102,9 +106,23 @@ include 'includes/admin_header.php';
                 </div>
             </div>
 
-            <div class="input-group">
-                <label>Image URL</label>
-                <input type="text" name="image_url" required value="<?php echo $product['image_url']; ?>">
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Skin Type / Variety</label>
+                    <select name="skin_type" required>
+                        <option value="All" <?php echo $product['skin_type_match'] == 'All' ? 'selected' : ''; ?>>All Skin Types</option>
+                        <option value="Oily" <?php echo $product['skin_type_match'] == 'Oily' ? 'selected' : ''; ?>>Oily Skin</option>
+                        <option value="Dry" <?php echo $product['skin_type_match'] == 'Dry' ? 'selected' : ''; ?>>Dry Skin</option>
+                        <option value="Combination" <?php echo $product['skin_type_match'] == 'Combination' ? 'selected' : ''; ?>>Combination Skin</option>
+                        <option value="Sensitive" <?php echo $product['skin_type_match'] == 'Sensitive' ? 'selected' : ''; ?>>Sensitive Skin</option>
+                        <option value="Normal" <?php echo $product['skin_type_match'] == 'Normal' ? 'selected' : ''; ?>>Normal Skin</option>
+                        <option value="Acne-Prone" <?php echo $product['skin_type_match'] == 'Acne-Prone' ? 'selected' : ''; ?>>Acne-Prone</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Image URL</label>
+                    <input type="text" name="image_url" required value="<?php echo $product['image_url']; ?>">
+                </div>
             </div>
 
             <div class="input-group">

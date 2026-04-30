@@ -32,7 +32,28 @@
     border-bottom: 1px solid #f9f9f9; font-size: 14px; transition: var(--transition); 
 }
 .account-nav a:hover, .account-nav a.active { color: var(--accent); font-weight: 600; padding-left: 10px; }
-.logout { color: #c0392b !important; margin-top: 20px; }
+.logout { 
+    color: white !important; 
+    background: #c0392b;
+    padding: 12px 25px !important;
+    border-radius: 50px;
+    text-align: center;
+    margin-top: 30px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 11px !important;
+    transition: var(--transition);
+    border: none;
+    display: block;
+}
+
+.logout:hover {
+    background: #e74c3c;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(192, 57, 43, 0.3);
+    padding-left: 0 !important;
+}
 
 /* Content Area */
 .account-content { flex-grow: 1; }

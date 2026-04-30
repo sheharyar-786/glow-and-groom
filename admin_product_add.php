@@ -11,10 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = mysqli_real_escape_string($conn, $_POST['category']);
     $gender = mysqli_real_escape_string($conn, $_POST['gender']);
     $image_url = mysqli_real_escape_string($conn, $_POST['image_url']);
+    $skin_type = mysqli_real_escape_string($conn, $_POST['skin_type']);
     $is_featured = isset($_POST['is_featured']) ? 1 : 0;
 
-    $query = "INSERT INTO products (name, slug, description, price, category, gender, image_url, is_featured) 
-              VALUES ('$name', '$slug', '$description', '$price', '$category', '$gender', '$image_url', '$is_featured')";
+    $query = "INSERT INTO products (name, slug, description, price, category, gender, skin_type_match, image_url, is_featured) 
+              VALUES ('$name', '$slug', '$description', '$price', '$category', '$gender', '$skin_type', '$image_url', '$is_featured')";
 
     if (mysqli_query($conn, $query)) {
         header("Location: admin_products.php?success=1");
@@ -72,9 +73,11 @@ include 'includes/admin_header.php';
                 <div class="input-group">
                     <label>Category</label>
                     <select name="category" required>
+                        <option value="Serums">Serums</option>
+                        <option value="Facial">Facial</option>
+                        <option value="Facemask">Facemask</option>
+                        <option value="Perfume">Perfume</option>
                         <option value="Skincare">Skincare</option>
-                        <option value="Treatment">Treatment</option>
-                        <option value="Daily Care">Daily Care</option>
                         <option value="Grooming">Grooming</option>
                     </select>
                 </div>
@@ -88,9 +91,23 @@ include 'includes/admin_header.php';
                 </div>
             </div>
 
-            <div class="input-group">
-                <label>Image URL</label>
-                <input type="text" name="image_url" required placeholder="https://images.unsplash.com/...">
+            <div class="form-row">
+                <div class="input-group">
+                    <label>Skin Type / Variety</label>
+                    <select name="skin_type" required>
+                        <option value="All">All Skin Types</option>
+                        <option value="Oily">Oily Skin</option>
+                        <option value="Dry">Dry Skin</option>
+                        <option value="Combination">Combination Skin</option>
+                        <option value="Sensitive">Sensitive Skin</option>
+                        <option value="Normal">Normal Skin</option>
+                        <option value="Acne-Prone">Acne-Prone</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Image URL (from assets/serums...)</label>
+                    <input type="text" name="image_url" required placeholder="assets/serums women/images.jpg">
+                </div>
             </div>
 
             <div class="input-group">
