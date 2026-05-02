@@ -4,16 +4,13 @@ $extraStyles = '<link rel="stylesheet" href="css/contact.css">';
 include 'includes/header.php'; 
 ?>
 
-    <header class="contact-hero" style="background: linear-gradient(rgba(10, 15, 15, 0.5), rgba(10, 15, 15, 0.5)), url('assets/images/contact-bg.png');">
-        <div class="container" data-aos="zoom-out">
-            <span class="subtitle" style="color: #fff; opacity: 0.8;">Personal Assistance</span>
-            <h1 style="color: #fff;">How Can We Help?</h1>
-            <p style="color: #eee;">Our experts are dedicated to helping you achieve your skincare goals.</p>
-        </div>
-    </header>
-
     <main class="contact-page">
         <div class="container">
+            <section class="contact-intro" data-aos="fade-up">
+                <span class="subtitle">Personal Assistance</span>
+                <h1>How Can We Help?</h1>
+                <p>Our experts are dedicated to helping you achieve your skincare goals.</p>
+            </section>
 
             <div class="contact-grid">
                 <div class="contact-form-wrapper" data-aos="fade-right">

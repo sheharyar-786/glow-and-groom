@@ -64,13 +64,13 @@ include 'includes/header.php';
             <div class="accordion-item">
                 <button class="accordion-header">Ingredients <span>+</span></button>
                 <div class="accordion-content">
-                    <p>Natural volcanic clay, charcoal, Vitamin E, and organic essential oils. Paraben-free and cruelty-free.</p>
+                    <p><?php echo !empty($product['ingredients']) ? $product['ingredients'] : 'Aqua (Water), Natural Botanical Extracts, Essential Oils, and Skin-Nurturing Minerals. Paraben-free and cruelty-free.'; ?></p>
                 </div>
             </div>
             <div class="accordion-item">
                 <button class="accordion-header">How to Use <span>+</span></button>
                 <div class="accordion-content">
-                    <p>Apply a small amount to damp skin, massage in circular motions, and rinse thoroughly. Use twice daily.</p>
+                    <p><?php echo !empty($product['how_to_use']) ? $product['how_to_use'] : 'Apply a small amount to clean, damp skin. Massage gently in upward circular motions until fully absorbed. Use twice daily for best results.'; ?></p>
                 </div>
             </div>
         </div>

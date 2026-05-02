@@ -2,7 +2,7 @@
         <div class="container footer-grid">
             <div class="footer-brand">
                 <a href="index.php" class="logo">
-                    <img src="assets/images/logo (2).png" alt="Glow & Groom Logo" style="height: 80px; width: 80px; object-fit: cover; border-radius: 50%; margin-bottom: 20px; mix-blend-mode: multiply; filter: contrast(1.1); background: white; border: 1px solid rgba(0,0,0,0.05); padding: 5px;">
+                    <img src="assets/images/logo (2).png" alt="Glow & Groom Logo" style="height: 90px; width: 90px; object-fit: cover; border-radius: 50%; margin-bottom: 25px; background: white; border: 3px solid var(--accent); padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
                 </a>
                 <p>Redefining beauty and grooming with premium, natural solutions for the modern individual.</p>
                 <div class="social-links">

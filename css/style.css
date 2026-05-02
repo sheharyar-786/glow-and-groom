@@ -33,11 +33,15 @@ body {
 
 /* --- Header --- */
 .main-header {
-    padding: 10px 0; 
-    background: var(--white); 
+    padding: 15px 0; 
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(0,0,0,0.05); 
+    position: relative;
     z-index: 1000;
-    transition: var(--transition);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    transition: var(--transition-slow);
 }
 
 .main-header nav {
@@ -72,28 +76,32 @@ body {
 
 .nav-links a { 
     text-decoration: none; 
-    color: var(--primary); 
-    font-weight: 500; 
-    font-size: 12px; 
+    color: white !important; 
+    font-weight: 700; 
+    font-size: 11px; 
     text-transform: uppercase;
     letter-spacing: 2px;
+    padding: 12px 28px;
+    border-radius: 50px;
     transition: var(--transition);
     position: relative;
+    background: linear-gradient(135deg, var(--primary), #2c3e3e);
+    box-shadow: 0 10px 20px rgba(26, 42, 42, 0.15);
+    display: inline-block;
 }
 
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    width: 0;
-    height: 1.5px;
+.nav-links a:hover {
     background: var(--accent);
-    transition: var(--transition);
-    transform: translateX(-50%);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(212, 163, 115, 0.3);
+    color: white !important;
 }
 
-.nav-links a:hover::after { width: 100%; }
+/* Remove special highlight class as they all share it now */
+.nav-links a.highlight {
+    background: linear-gradient(135deg, var(--primary), #2c3e3e);
+}
+
 .nav-links a:hover, .highlight { color: var(--accent); }
 
 .nav-icons { display: flex; gap: 30px; align-items: center; }

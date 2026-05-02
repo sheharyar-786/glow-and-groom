@@ -5,15 +5,38 @@ include 'includes/frontend_guard.php';
 $gender_filter = isset($_GET['gender']) ? mysqli_real_escape_string($conn, $_GET['gender']) : '';
 $category_filter = isset($_GET['category']) ? mysqli_real_escape_string($conn, $_GET['category']) : '';
 $skin_type_filter = isset($_GET['skin_type']) ? mysqli_real_escape_string($conn, $_GET['skin_type']) : '';
+$price_min = isset($_GET['min_price']) ? (int)$_GET['min_price'] : 0;
+$price_max = isset($_GET['max_price']) ? (int)$_GET['max_price'] : 100000;
+$sort = isset($_GET['sort']) ? mysqli_real_escape_string($conn, $_GET['sort']) : 'default';
 
 // Build Query
-$query = "SELECT * FROM products WHERE 1=1";
-if ($gender_filter) { $query .= " AND gender = '$gender_filter'"; }
+$query = "SELECT * FROM products WHERE price BETWEEN $price_min AND $price_max";
+if ($gender_filter) { 
+    $query .= " AND (gender = '$gender_filter' OR gender = 'unisex')"; 
+}
 if ($category_filter) { $query .= " AND category = '$category_filter'"; }
 if ($skin_type_filter) { $query .= " AND skin_type_match = '$skin_type_filter'"; }
 
+// Add Sorting
+switch($sort) {
+    case 'price_low': $query .= " ORDER BY price ASC"; break;
+    case 'price_high': $query .= " ORDER BY price DESC"; break;
+    case 'newest': $query .= " ORDER BY id DESC"; break;
+    default: $query .= " ORDER BY is_featured DESC, id DESC"; break;
+}
+
 $result = mysqli_query($conn, $query);
 $count = mysqli_num_rows($result);
+
+// Helper function for building persistent URLs
+function filter_url($params) {
+    $current = $_GET;
+    foreach($params as $key => $val) {
+        if ($val === null) unset($current[$key]);
+        else $current[$key] = $val;
+    }
+    return 'shop.php?' . http_build_query($current);
+}
 
 $pageTitle = "The Collection | Glow & Groom";
 $extraStyles = '<link rel="stylesheet" href="css/shop.css">';
@@ -53,31 +76,41 @@ include 'includes/header.php';
                 <div class="filter-group">
                     <h4>Gender</h4>
                     <div class="filter-options">
-                        <a href="shop.php" class="filter-label <?php echo !$gender_filter ? 'active' : ''; ?>">All Collections</a>
-                        <a href="shop.php?gender=women" class="filter-label <?php echo $gender_filter == 'women' ? 'active' : ''; ?>">For Her (Glow)</a>
-                        <a href="shop.php?gender=men" class="filter-label <?php echo $gender_filter == 'men' ? 'active' : ''; ?>">For Him (Groom)</a>
+                        <a href="<?php echo filter_url(['gender' => null]); ?>" class="filter-label <?php echo !$gender_filter ? 'active' : ''; ?>">All Collections</a>
+                        <a href="<?php echo filter_url(['gender' => 'women']); ?>" class="filter-label <?php echo $gender_filter == 'women' ? 'active' : ''; ?>">For Her (Glow)</a>
+                        <a href="<?php echo filter_url(['gender' => 'men']); ?>" class="filter-label <?php echo $gender_filter == 'men' ? 'active' : ''; ?>">For Him (Groom)</a>
                     </div>
                 </div>
 
                 <div class="filter-group">
                     <h4>Categories</h4>
                     <div class="filter-options">
-                        <a href="shop.php" class="filter-label <?php echo !$category_filter ? 'active' : ''; ?>">All Collections</a>
-                        <a href="shop.php?category=Serums" class="filter-label <?php echo $category_filter == 'Serums' ? 'active' : ''; ?>">Active Serums</a>
-                        <a href="shop.php?category=Facial" class="filter-label <?php echo $category_filter == 'Facial' ? 'active' : ''; ?>">Facial Care</a>
-                        <a href="shop.php?category=Facemask" class="filter-label <?php echo $category_filter == 'Facemask' ? 'active' : ''; ?>">Face Masks</a>
-                        <a href="shop.php?category=Perfume" class="filter-label <?php echo $category_filter == 'Perfume' ? 'active' : ''; ?>">Luxury Perfumes</a>
+                        <a href="<?php echo filter_url(['category' => null]); ?>" class="filter-label <?php echo !$category_filter ? 'active' : ''; ?>">All Collections</a>
+                        <a href="<?php echo filter_url(['category' => 'Serums']); ?>" class="filter-label <?php echo $category_filter == 'Serums' ? 'active' : ''; ?>">Active Serums</a>
+                        <a href="<?php echo filter_url(['category' => 'Facial']); ?>" class="filter-label <?php echo $category_filter == 'Facial' ? 'active' : ''; ?>">Facial Care</a>
+                        <a href="<?php echo filter_url(['category' => 'Facemask']); ?>" class="filter-label <?php echo $category_filter == 'Facemask' ? 'active' : ''; ?>">Face Masks</a>
+                        <a href="<?php echo filter_url(['category' => 'Perfume']); ?>" class="filter-label <?php echo $category_filter == 'Perfume' ? 'active' : ''; ?>">Luxury Perfumes</a>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <h4>Price Range</h4>
+                    <div class="filter-options">
+                        <a href="<?php echo filter_url(['min_price' => null, 'max_price' => null]); ?>" class="filter-label <?php echo (!$price_min && $price_max > 50000) ? 'active' : ''; ?>">All Prices</a>
+                        <a href="<?php echo filter_url(['min_price' => 0, 'max_price' => 2000]); ?>" class="filter-label <?php echo ($price_max == 2000) ? 'active' : ''; ?>">Under 2,000 PKR</a>
+                        <a href="<?php echo filter_url(['min_price' => 2000, 'max_price' => 5000]); ?>" class="filter-label <?php echo ($price_min == 2000) ? 'active' : ''; ?>">2,000 - 5,000 PKR</a>
+                        <a href="<?php echo filter_url(['min_price' => 5000, 'max_price' => 10000]); ?>" class="filter-label <?php echo ($price_min == 5000) ? 'active' : ''; ?>">5,000 - 10,000 PKR</a>
+                        <a href="<?php echo filter_url(['min_price' => 10000, 'max_price' => 100000]); ?>" class="filter-label <?php echo ($price_min == 10000) ? 'active' : ''; ?>">Above 10,000 PKR</a>
                     </div>
                 </div>
 
                 <div class="filter-group">
                     <h4>Skin Type</h4>
                     <div class="filter-options">
-                        <a href="shop.php?skin_type=Oily" class="filter-label <?php echo $skin_type_filter == 'Oily' ? 'active' : ''; ?>">Oily Skin</a>
-                        <a href="shop.php?skin_type=Dry" class="filter-label <?php echo $skin_type_filter == 'Dry' ? 'active' : ''; ?>">Dry Skin</a>
-                        <a href="shop.php?skin_type=Combination" class="filter-label <?php echo $skin_type_filter == 'Combination' ? 'active' : ''; ?>">Combination</a>
-                        <a href="shop.php?skin_type=Sensitive" class="filter-label <?php echo $skin_type_filter == 'Sensitive' ? 'active' : ''; ?>">Sensitive</a>
-                        <a href="shop.php?skin_type=Normal" class="filter-label <?php echo $skin_type_filter == 'Normal' ? 'active' : ''; ?>">Normal</a>
+                        <a href="<?php echo filter_url(['skin_type' => null]); ?>" class="filter-label <?php echo !$skin_type_filter ? 'active' : ''; ?>">Any Skin Type</a>
+                        <a href="<?php echo filter_url(['skin_type' => 'Oily']); ?>" class="filter-label <?php echo $skin_type_filter == 'Oily' ? 'active' : ''; ?>">Oily Skin</a>
+                        <a href="<?php echo filter_url(['skin_type' => 'Dry']); ?>" class="filter-label <?php echo $skin_type_filter == 'Dry' ? 'active' : ''; ?>">Dry Skin</a>
+                        <a href="<?php echo filter_url(['skin_type' => 'Combination']); ?>" class="filter-label <?php echo $skin_type_filter == 'Combination' ? 'active' : ''; ?>">Combination</a>
                     </div>
                 </div>
 
@@ -95,11 +128,11 @@ include 'includes/header.php';
                         Showing <span><?php echo $count; ?></span> Essential Selections
                     </div>
                     <div class="shop-sort">
-                        <select class="sort-select">
-                            <option>Default Sorting</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
-                            <option>Newest Arrivals</option>
+                        <select class="sort-select" onchange="location.href=this.value">
+                            <option value="<?php echo filter_url(['sort' => 'default']); ?>" <?php echo $sort == 'default' ? 'selected' : ''; ?>>Default Sorting</option>
+                            <option value="<?php echo filter_url(['sort' => 'price_low']); ?>" <?php echo $sort == 'price_low' ? 'selected' : ''; ?>>Price: Low to High</option>
+                            <option value="<?php echo filter_url(['sort' => 'price_high']); ?>" <?php echo $sort == 'price_high' ? 'selected' : ''; ?>>Price: High to Low</option>
+                            <option value="<?php echo filter_url(['sort' => 'newest']); ?>" <?php echo $sort == 'newest' ? 'selected' : ''; ?>>Newest Arrivals</option>
                         </select>
                     </div>
                 </div>

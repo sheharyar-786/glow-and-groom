@@ -4,8 +4,16 @@ include 'includes/auth_guard.php';
 
 // Get user info from session
 $user_id = $_SESSION['user_id'];
-$userName = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : "Member";
-$userInitial = substr($userName, 0, 1);
+
+// Fetch user routine data
+$u_query = "SELECT * FROM users WHERE id = '$user_id'";
+$u_res = mysqli_query($conn, $u_query);
+$user = mysqli_fetch_assoc($u_res);
+
+$userName = $user['first_name'] . ' ' . $user['last_name'];
+$userInitial = substr($user['first_name'], 0, 1);
+$saved_skin = $user['saved_skin_type'];
+$saved_concern = $user['saved_concern'];
 
 $pageTitle = "My Account | Glow & Groom";
 $extraStyles = '<link rel="stylesheet" href="css/account.css">';
@@ -30,6 +38,12 @@ include 'includes/header.php';
         <?php if(isset($_GET['order_success'])): ?>
             <div style="background: #eafaf1; color: #2ecc71; padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(46, 204, 113, 0.2);">
                 <strong>🎉 Success!</strong> Your order has been placed successfully.
+            </div>
+        <?php endif; ?>
+
+        <?php if(isset($_GET['routine_saved'])): ?>
+            <div style="background: #eaf3fa; color: #3498db; padding: 20px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(52, 152, 219, 0.2);">
+                <strong>✨ Saved!</strong> Your personalized routine has been updated.
             </div>
         <?php endif; ?>
 
@@ -67,12 +81,17 @@ include 'includes/header.php';
             </table>
         </div>
 
-        <div class="routine-banner" style="margin-top: 50px;">
+        <div class="routine-banner" style="margin-top: 50px; background: linear-gradient(135deg, var(--primary), #2c3e3e); color: white; padding: 40px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center;">
             <div class="banner-text">
-                <h4>Your Custom Routine</h4>
-                <p>Build your personalized care plan based on your skin type.</p>
+                <?php if($saved_skin): ?>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 10px;">Your Custom Routine: <?php echo $saved_skin; ?></h4>
+                    <p style="opacity: 0.8; font-size: 14px;">Focused on: <strong><?php echo $saved_concern; ?></strong></p>
+                <?php else: ?>
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 10px;">Build Your Custom Routine</h4>
+                    <p style="opacity: 0.8; font-size: 14px;">Our AI diagnostic analyzes your skin to find your perfect match.</p>
+                <?php endif; ?>
             </div>
-            <a href="routine-builder.php" class="btn-sm">Start Quiz</a>
+            <a href="routine-builder.php" class="btn" style="background: var(--accent); color: white; border: none; padding: 15px 30px; font-size: 11px;"><?php echo $saved_skin ? 'Update Quiz' : 'Start Quiz'; ?></a>
         </div>
     </section>
 </main>

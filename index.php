@@ -65,7 +65,7 @@ include 'includes/header.php';
                 <a href="routine-builder.php" class="btn">Build My Routine</a>
             </div>
             <div class="cta-image" data-aos="fade-left">
-                <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=800&auto=format&fit=crop" alt="Skincare">
+                <img src="assets/images/routine_cta.png" alt="Skincare Ritual">
             </div>
         </div>
     </section>
