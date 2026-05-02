@@ -2,12 +2,36 @@
 include 'includes/db.php';
 
 $gender = isset($_GET['gender']) ? mysqli_real_escape_string($conn, $_GET['gender']) : 'unisex';
+// Smarter Recommendation Engine
 $skin_type = isset($_GET['skin_type']) ? mysqli_real_escape_string($conn, $_GET['skin_type']) : 'Normal';
-$concern = isset($_GET['concern']) ? mysqli_real_escape_string($conn, $_GET['concern']) : 'General Care';
+$concern = isset($_GET['concern']) ? mysqli_real_escape_string($conn, $_GET['concern']) : 'Hydration';
 
-// Query products that match the skin type and gender
-$query = "SELECT * FROM products WHERE (gender = '$gender' OR gender = 'unisex') AND skin_type_match = '$skin_type' LIMIT 3";
-$results = mysqli_query($conn, $query);
+// Define categories for a complete ritual
+$ritual_steps = [
+    'Step 1: Cleanse' => 'Facial',
+    'Step 2: Treat' => 'Serums',
+    'Step 3: Nourish' => 'Facemask'
+];
+
+$recommended_products = [];
+
+foreach ($ritual_steps as $step_name => $cat) {
+    // Try to match skin type and gender
+    // Priority: Specific skin type match -> 'All' skin type
+    $query = "SELECT * FROM products 
+              WHERE (gender = '$gender' OR gender = 'unisex') 
+              AND category = '$cat' 
+              AND (skin_type_match = '$skin_type' OR skin_type_match = 'All')";
+    
+    // Boost results matching the concern in description or name
+    $query .= " ORDER BY (CASE WHEN description LIKE '%$concern%' OR name LIKE '%$concern%' THEN 1 ELSE 2 END) ASC, rand() LIMIT 1";
+    
+    $res = mysqli_query($conn, $query);
+    if ($product = mysqli_fetch_assoc($res)) {
+        $product['step_title'] = $step_name;
+        $recommended_products[] = $product;
+    }
+}
 
 $pageTitle = "Your Custom Ritual | Glow & Groom";
 $extraStyles = '<link rel="stylesheet" href="css/results.css">';
@@ -23,10 +47,10 @@ include 'includes/header.php';
         </section>
 
         <div class="results-grid">
-            <?php if(mysqli_num_rows($results) > 0): ?>
-                <?php while($product = mysqli_fetch_assoc($results)): ?>
+            <?php if(count($recommended_products) > 0): ?>
+                <?php foreach($recommended_products as $product): ?>
                 <article class="recommendation-card" data-aos="fade-up">
-                    <div class="match-badge">98% Match</div>
+                    <div class="match-badge"><?php echo $product['step_title']; ?></div>
                     <div class="rec-img-wrapper">
                         <img src="<?php echo $product['image_url']; ?>" alt="<?php echo $product['name']; ?>">
                     </div>
@@ -37,7 +61,7 @@ include 'includes/header.php';
                         <button class="rec-btn" onclick="window.location.href='cart_action.php?add=<?php echo $product['id']; ?>'">Add to My Routine</button>
                     </div>
                 </article>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
             <?php else: ?>
                 <div class="no-results" style="grid-column: span 3; text-align: center; padding: 100px; background: #f9f9f9; border-radius: 40px; border: 2px dashed #eee;">
                     <h3 style="font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 15px;">A Unique Profile.</h3>
